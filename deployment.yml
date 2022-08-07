@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: minecraft
+  namespace: feavy
+  labels:
+    k8s-app: minecraft
+spec:
+  selector:
+    matchLabels:
+      k8s-app: minecraft
+  template:
+    metadata:
+      labels:
+        k8s-app: minecraft
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: 'feavy'
+      hostNetwork: true # Ou possible avec hostPort
+      containers:
+        - name: minecraft
+          image: openjdk:17
+          workingDir: /etc/minecraft
+          command: ["java"]
+          args: ["-jar", "paper-1.18.2-283.jar"]
+          env:
+          - name: MINECRAFT_TOKEN
+            value: "${MINECRAFT_TOKEN}"
+          - name: MINECRAFT_CHANNEL
+            value: "${MINECRAFT_CHANNEL}"
+          volumeMounts:
+            - mountPath: /etc/minecraft
+              name: minecraft-data
+          imagePullPolicy: Always
+      volumes:
+        - name: minecraft-data
+          hostPath:
+            path: /home/admin/minecraft
+      imagePullSecrets:
+        - name: regcred

@@ -1,0 +1,25 @@
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: .
+
+      - uses: feavy/deploy@main
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+          GITHUB_USERNAME: feavy
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+          DEPLOYMENT: deployment.yml
+          MINECRAFT_TOKEN: "${{ secrets.MINECRAFT_TOKEN }}"
+          MINECRAFT_CHANNEL: "427561263485419531"
