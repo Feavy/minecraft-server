@@ -23,3 +23,4 @@ jobs:
           DEPLOYMENT: deployment.yml
           MINECRAFT_TOKEN: "${{ secrets.MINECRAFT_TOKEN }}"
           MINECRAFT_CHANNEL: "427561263485419531"
+          PLATFORM: arm64

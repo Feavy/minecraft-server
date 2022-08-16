@@ -15,7 +15,7 @@ spec:
         k8s-app: minecraft
     spec:
       nodeSelector:
-        kubernetes.io/hostname: 'feavy'
+        kubernetes.io/hostname: 'oracle-paris'
       hostNetwork: true # Ou possible avec hostPort
       containers:
         - name: minecraft
